@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="property-service" />
+        <module name="Rental-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Property-Service" target="21" />
+      <module name="Property_Rental" target="21" />
+      <module name="property_rental" target="21" />
+      <module name="Rental-Service" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Property-Service" options="-parameters" />
+      <module name="Property_Rental" options="-parameters" />
+      <module name="Rental-service" options="-parameters" />
+      <module name="property-service" options="-parameters" />
+      <module name="property_rental" options="-parameters" />
+    </option>
+  </component>
+</project>
