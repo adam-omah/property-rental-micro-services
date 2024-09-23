@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Property-Rental-UI.iml" filepath="$PROJECT_DIR$/Property-Rental-UI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestService.iml" filepath="$PROJECT_DIR$/TestService.iml" />
       <module fileurl="file://$PROJECT_DIR$/property-rental-micro-service.iml" filepath="$PROJECT_DIR$/property-rental-micro-service.iml" />
     </modules>
   </component>

@@ -8,13 +8,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="property-service" />
-        <module name="Rental-service" />
+        <module name="rental-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="property-rental-system" target="21" />
+      <module name="property-rental-system (1)" target="21" />
+      <module name="property-rental-system (2)" target="21" />
       <module name="Property-Service" target="21" />
       <module name="Property_Rental" target="21" />
       <module name="property_rental" target="21" />
+      <module name="Rental-service" target="21" />
       <module name="Rental-Service" target="21" />
     </bytecodeTargetLevel>
   </component>
@@ -23,8 +27,12 @@
       <module name="Property-Service" options="-parameters" />
       <module name="Property_Rental" options="-parameters" />
       <module name="Rental-service" options="-parameters" />
+      <module name="property-rental-system" options="-parameters" />
+      <module name="property-rental-system (1)" options="-parameters" />
+      <module name="property-rental-system (2)" options="-parameters" />
       <module name="property-service" options="-parameters" />
       <module name="property_rental" options="-parameters" />
+      <module name="rental-service" options="-parameters" />
     </option>
   </component>
 </project>
