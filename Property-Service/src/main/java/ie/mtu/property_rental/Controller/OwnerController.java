@@ -1,7 +1,7 @@
 package ie.mtu.property_rental.Controller;
 
 import ie.mtu.property_rental.Entities.Owner;
-import ie.mtu.property_rental.Service.OwnerService;
+import ie.mtu.property_rental.Services.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

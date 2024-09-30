@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 
 // Class
 public class Owner {
-
     @Id
     @SequenceGenerator(name = "owner_seq", sequenceName = "owner_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "owner_seq")
