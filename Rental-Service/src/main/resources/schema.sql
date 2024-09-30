@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS tenant (
-                        tenant_id BIGINT PRIMARY KEY,
-                        tenant_name VARCHAR(255) NOT NULL,
-                        tenant_email VARCHAR(255) NOT NULL,
-                        tenant_phone VARCHAR(20)
+    tenant_id BIGINT PRIMARY KEY,
+    tenant_name VARCHAR(255) NOT NULL,
+    tenant_email VARCHAR(255) NOT NULL,
+    tenant_phone VARCHAR(20)
 );
 
 CREATE SEQUENCE IF NOT EXISTS TENANT_SEQ START WITH 1 INCREMENT BY 1;
