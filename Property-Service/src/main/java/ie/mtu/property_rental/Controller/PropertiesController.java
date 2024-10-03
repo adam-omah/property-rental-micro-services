@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 // Annotation
 @RestController
@@ -17,7 +18,7 @@ public class PropertiesController {
     private PropertiesService propertiesService;
 
     // Save operation
-    @PostMapping("/propertiess")
+    @PostMapping("/properties")
     public Properties saveProperties(
             @RequestBody Properties properties)
     {
@@ -25,14 +26,19 @@ public class PropertiesController {
     }
 
     // Read operation
-    @GetMapping("/propertiess")
+    @GetMapping("/properties")
     public List<Properties> fetchPropertiesList()
     {
         return propertiesService.fetchPropertiesList();
     }
+    @GetMapping("/properties/{id}")
+    public Optional<Properties> fetchPropertiesFromID(@PathVariable Long id)
+    {
+        return propertiesService.fetchPropertyById(id);
+    }
 
     // Update operation
-    @PutMapping("/propertiess/{id}")
+    @PutMapping("/properties/{id}")
     public Properties
     updateProperties(@RequestBody Properties properties,
                 @PathVariable("id") Long propertiesId)
@@ -42,7 +48,7 @@ public class PropertiesController {
     }
 
     // Delete operation
-    @DeleteMapping("/propertiess/{id}")
+    @DeleteMapping("/properties/{id}")
     public String deletePropertiesById(@PathVariable("id")
                                   Long propertiesId)
     {

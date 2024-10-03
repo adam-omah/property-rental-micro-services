@@ -23,6 +23,10 @@ public class PropertiesService {
     {
         return propertiesRepository.save(properties);
     }
+    // Read By ID operation
+    public Optional<Properties> fetchPropertyById(Long propertiesId) {
+        return propertiesRepository.findById(propertiesId);
+    }
 
     // Read All operation
     public List<Properties> fetchPropertiesList()
