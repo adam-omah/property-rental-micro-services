@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Data
@@ -18,6 +19,8 @@ public class Properties {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "properties_seq")
     private long propertiesId;
     private long ownerId;
+    @ColumnDefault("AVAILABLE")
+    private String status;
     private String propertyName;
     private float rentalValue;
     private String propertyType;

@@ -12,6 +12,7 @@ CREATE SEQUENCE IF NOT EXISTS OWNER_SEQ START WITH 1 INCREMENT BY 1;
 CREATE TABLE IF NOT EXISTS properties (
     properties_id BIGINT PRIMARY KEY,
     owner_id BIGINT,
+    status VARCHAR(125) DEFAULT 'AVAILABLE',
     property_name VARCHAR(255) NOT NULL,
     rental_value DECIMAL,
     property_type VARCHAR(255),
