@@ -66,7 +66,6 @@ public class Rentals {
 
     private static float calculateRentalValue(String propertyId, RentalType rentalType) {
         RestTemplate restTemplate = new RestTemplateBuilder()
-                // ... (Error handling as shown in previous example)
                 .build();
 
         HttpHeaders headers = new HttpHeaders();
@@ -79,7 +78,7 @@ public class Rentals {
                     "http://localhost:8084/properties/" + propertyId,
                     HttpMethod.GET,
                     entity,
-                    Properties.class // Use the Properties class here
+                    Properties.class
             );
 
             if (response.getStatusCode() == HttpStatus.OK) {
@@ -99,13 +98,13 @@ public class Rentals {
                     }
                 } else {
                         // Handle unexpected data type or null value
-                        System.out.println("Invalid monthlyCost format in API response");
+                        log.info("Invalid monthlyCost format in API response");
                     }
                 } else {
-                    System.out.println("No property data found in response");
+                    log.info("No property data found in response");
                 }
         } catch (Exception e) {
-            System.out.println("Error during API call: " + e.getMessage());
+            log.info("Error during API call: {}", e.getMessage());
         }
         return 0.0f;
     }
