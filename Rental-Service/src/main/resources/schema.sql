@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS rentals (
     rentals_id BIGINT PRIMARY KEY,
     tenant_id BIGINT,
     property_id BIGINT,
-    retnal_type VARCHAR(12),
+    rental_type VARCHAR(12),
     rental_cost DECIMAL,
     deposit_paid DECIMAL,
     additional_tenant_ids VARCHAR(255),

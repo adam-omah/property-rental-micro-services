@@ -17,37 +17,34 @@ public class RentalsController {
     private RentalsService rentalsService;
 
     // Save operation
-    @PostMapping("/rentalss")
+    @PostMapping("/rentals")
     public Rentals saveRentals(
-            @RequestBody Rentals rentals)
-    {
-        return rentalsService.saveRentals(rentals);
+            @RequestBody Rentals rentals) {
+
+        // Using the custom builder
+        Rentals customRental = Rentals.rentalsBuilder(rentals.getTenantId(), rentals.getPropertyId(), rentals.getRentalType(),
+                rentals.getDepositPaid(), rentals.getAdditionalTenantIds(),
+                rentals.getStartDate(), rentals.getEndDate());
+        return rentalsService.saveRentals(customRental);
     }
 
     // Read operation
-    @GetMapping("/rentalss")
-    public List<Rentals> fetchRentalsList()
-    {
+    @GetMapping("/rentals")
+    public List<Rentals> fetchRentalsList() {
         return rentalsService.fetchRentalsList();
     }
 
     // Update operation
-    @PutMapping("/rentalss/{id}")
-    public Rentals
-    updateRentals(@RequestBody Rentals rentals,
-                     @PathVariable("id") Long rentalsId)
-    {
-        return rentalsService.updateRentals(
-                rentals, rentalsId);
+    @PutMapping("/rentals/{id}")
+    public Rentals updateRentals(@RequestBody Rentals rentals,
+                                 @PathVariable("id") Long rentalsId) {
+        return rentalsService.updateRentals(rentals, rentalsId);
     }
 
     // Delete operation
-    @DeleteMapping("/rentalss/{id}")
-    public String deleteRentalsById(@PathVariable("id")
-                                       Long rentalsId)
-    {
-        rentalsService.deleteRentalsById(
-                rentalsId);
+    @DeleteMapping("/rentals/{id}")
+    public String deleteRentalsById(@PathVariable("id") Long rentalsId) {
+        rentalsService.deleteRentalsById(rentalsId);
         return "Deleted Successfully";
     }
 }

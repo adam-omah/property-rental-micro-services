@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS owner (
-                        owner_id BIGINT PRIMARY KEY,
-                        owner_name VARCHAR(255) NOT NULL,
-                        owner_email VARCHAR(255) NOT NULL,
-                        owner_address VARCHAR(255),
-                        owner_phone VARCHAR(20),
-                        owneriban VARCHAR(34)  -- Assuming a fixed length of 34 for IBAN
+    owner_id BIGINT PRIMARY KEY,
+    owner_name VARCHAR(255) NOT NULL,
+    owner_email VARCHAR(255) NOT NULL,
+    owner_address VARCHAR(255),
+    owner_phone VARCHAR(20),
+    owneriban VARCHAR(34)
 );
 
 CREATE SEQUENCE IF NOT EXISTS OWNER_SEQ START WITH 1 INCREMENT BY 1;
@@ -12,7 +12,7 @@ CREATE SEQUENCE IF NOT EXISTS OWNER_SEQ START WITH 1 INCREMENT BY 1;
 CREATE TABLE IF NOT EXISTS properties (
     properties_id BIGINT PRIMARY KEY,
     owner_id BIGINT,
-    status VARCHAR(125) DEFAULT 'AVAILABLE',
+    status VARCHAR(125) NOT NULL DEFAULT 'AVAILABLE',
     property_name VARCHAR(255) NOT NULL,
     rental_value DECIMAL,
     property_type VARCHAR(255),

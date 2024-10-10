@@ -1,5 +1,6 @@
 package ie.mtu.property_rental.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import ie.mtu.property_rental.models.RentalType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,35 +8,40 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 
 import java.sql.Date;
+import java.util.Collections;
 import java.util.Map;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Rentals {
+    private static final Logger log = LoggerFactory.getLogger(Rentals.class);
     @Id
     @SequenceGenerator(name = "rentals_seq", sequenceName = "rentals_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rentals_seq")
     private Long rentalsId;
     private String tenantId;
     private String propertyId;
-    @ColumnDefault("STANDARD")
-    private RentalType rentalType;
+    @Enumerated(EnumType.STRING)
+    private RentalType rentalType = RentalType.STANDARD;
     private float rentalCost;
     private float depositPaid;
     private String additionalTenantIds;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date startDate;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date endDate;
 
     // Custom builder with logic for rental cost
@@ -53,39 +59,53 @@ public class Rentals {
 
         // Calculate and set rentalCost if null
         if (rentals.rentalCost == 0) {
-            rentals.rentalCost = calculateMonthlyCost(propertyId, rentalType);
+            rentals.rentalCost = calculateRentalValue(propertyId, rentalType);
         }
         return rentals;
     }
 
-    private static float calculateMonthlyCost(String propertyId, RentalType rentalType) {
-        RestTemplate restTemplate = new RestTemplate();
-        var response = restTemplate.getForEntity("https://api.yourdomain.com/properties/" + propertyId, Map.class);
+    private static float calculateRentalValue(String propertyId, RentalType rentalType) {
+        RestTemplate restTemplate = new RestTemplateBuilder()
+                // ... (Error handling as shown in previous example)
+                .build();
 
-        if (response.getStatusCode() == HttpStatus.OK) {
-            Map<String, Object> propertyData = response.getBody();
-            Object monthlyCostObject = propertyData.get("monthlyCost");
-            if (monthlyCostObject instanceof Float) {
-                switch (rentalType){
-                    case STANDARD -> {
-                        return (Float)monthlyCostObject * 1.1f;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        try {
+            ResponseEntity<Properties> response = restTemplate.exchange(
+                    "http://localhost:8084/properties/" + propertyId,
+                    HttpMethod.GET,
+                    entity,
+                    Properties.class // Use the Properties class here
+            );
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                Properties propertyData = response.getBody();
+                log.info(response.toString());
+                if (propertyData != null) {
+                    switch (rentalType) {
+                        case STANDARD -> {
+                            return propertyData.getRentalValue() * 1.1f;
+                        }
+                        case SHORT -> {
+                            return propertyData.getRentalValue() * 1.15f;
+                        }
+                        case LONG -> {
+                            return propertyData.getRentalValue() * 1.05f;
+                        }
                     }
-                    case SHORT -> {
-                        return (Float)monthlyCostObject * 1.15f;
+                } else {
+                        // Handle unexpected data type or null value
+                        System.out.println("Invalid monthlyCost format in API response");
                     }
-                    case LONG -> {
-                        return (Float)monthlyCostObject * 1.05f;
-                    }
+                } else {
+                    System.out.println("No property data found in response");
                 }
-            } else {
-                // Handle unexpected data type or null value
-                System.out.println("Invalid monthlyCost format in API response");
-                return 0.0f;
-            }
-        } else {
-            // Handle API call errors
-            System.out.println("Failed to retrieve property data from API");
-            return 0.0f;
+        } catch (Exception e) {
+            System.out.println("Error during API call: " + e.getMessage());
         }
         return 0.0f;
     }

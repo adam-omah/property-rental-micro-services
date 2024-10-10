@@ -1,25 +1,19 @@
 package ie.mtu.property_rental.Entities;
 
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Getter
+@Setter
 public class Properties {
     @Id
-    @SequenceGenerator(name = "properties_seq", sequenceName = "properties_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "properties_seq")
     private long propertiesId;
     private long ownerId;
-    // Default Value set
-    private String status = "AVAILABLE";
+    private String status;
     private String propertyName;
     private float rentalValue;
     private String propertyType;
