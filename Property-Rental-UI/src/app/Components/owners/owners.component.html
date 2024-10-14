@@ -1,1 +1,73 @@
-<p>owners works!</p>
+<form [formGroup]="ownerForm" (ngSubmit)="saveOwner()" class="form-container">
+  <div>
+    <h2 class="text-center">{{ editingOwner? 'Update Owner' : 'Create New Owner' }}</h2>
+    <input type="hidden" formControlName="ownerId">
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="ownerName">Owner Name</label>
+        <br>
+        <input pInputText type="text" id="ownerName" formControlName="ownerName" />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="ownerEmail">Owner Email</label>
+        <br>
+        <input pInputText type="email" id="ownerEmail" formControlName="ownerEmail" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="ownerAddress">Owner Address</label>
+        <br>
+        <input pInputText type="text" id="ownerAddress" formControlName="ownerAddress" />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="ownerPhone">Owner Phone</label>
+        <br>
+        <input pInputText type="text" id="ownerPhone" formControlName="ownerPhone" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="ownerIBAN">Owner IBAN</label>
+        <br>
+        <input pInputText type="text" id="ownerIBAN" formControlName="ownerIBAN" />
+      </div>
+      <button pButton type="submit">{{ editingOwner ? 'Update Owner' : 'Create New Owner' }}</button>
+    </div>
+
+
+  </div>
+</form>
+
+<p-table [value]="owners" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <th>IBAN</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-owner>
+    <tr>
+      <td>{{ owner.ownerId }}</td>
+      <td>{{ owner.ownerName }}</td>
+      <td>{{ owner.ownerEmail }}</td>
+      <td>{{ owner.ownerAddress }}</td>
+      <td>{{ owner.ownerPhone }}</td>
+      <td>{{ owner.ownerIBAN }}</td>
+      <td>
+        <button pButton type="button" icon="pi pi-pencil" (click)="editOwner(owner)" label="Edit"></button>
+        <button pButton type="button" icon="pi pi-trash" (click)="deleteOwner(owner.ownerId)"
+                style="color: white; background-color: red;" label="Delete"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

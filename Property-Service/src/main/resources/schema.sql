@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS properties (
     owner_id BIGINT,
     status VARCHAR(125) NOT NULL DEFAULT 'AVAILABLE',
     property_name VARCHAR(255) NOT NULL,
+    property_eircode VARCHAR(10) NOT NULL,
     rental_value DECIMAL,
     property_type VARCHAR(255),
     property_description TEXT,
