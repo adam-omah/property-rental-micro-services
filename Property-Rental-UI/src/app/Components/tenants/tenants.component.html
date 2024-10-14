@@ -1,1 +1,55 @@
-<p>tenants works!</p>
+<form [formGroup]="tenantForm" (ngSubmit)="saveTenant()" class="form-container">
+  <div>
+    <h2 class="text-center">{{ editingTenant ? 'Update Tenant' : 'Create New Tenant' }}</h2>
+    <input type="hidden" formControlName="tenantId">
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="tenantName">Tenant Name</label>
+        <br>
+        <input pInputText type="text" id="tenantName" formControlName="tenantName" />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="tenantEmail">Tenant Email</label>
+        <br>
+        <input pInputText type="email" id="tenantEmail" formControlName="tenantEmail" />
+      </div>
+    </div>
+    <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="tenantPhone">Tenant Phone</label>
+      <br>
+      <input pInputText type="text" id="tenantPhone" formControlName="tenantPhone" />
+    </div>
+      <div class="form-group col-md-6">
+        <button pButton type="submit">{{ editingTenant ? 'Update Tenant' : 'Create New Tenant' }}</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<p-table [value]="tenants" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-tenant>
+    <tr>
+      <td>{{ tenant.tenantId }}</td>
+      <td>{{ tenant.tenantName }}</td>
+      <td>{{ tenant.tenantEmail }}</td>
+      <td>{{ tenant.tenantPhone }}</td>
+      <td>
+        <button pButton type="button" icon="pi pi-pencil" (click)="editTenant(tenant)" label="Edit"></button>
+        <button pButton type="button" icon="pi pi-trash" (click)="deleteTenant(tenant.tenantId)"
+                style="color: white; background-color: red;" label="Delete"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

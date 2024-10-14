@@ -21,6 +21,7 @@ public class Properties {
     // Default Value set
     private String status = "AVAILABLE";
     private String propertyName;
+    private String propertyEircode;
     private float rentalValue;
     private String propertyType;
     private String propertyDescription;

@@ -1,1 +1,124 @@
-<p>properties works!</p>
+
+<form [formGroup]="propertyForm" (ngSubmit)="saveProperty()" class="form-container">
+  <div>
+    <h2 class="text-center">{{ editingProperty ? 'Update Property' : 'Create New Property' }}</h2>
+    <input type="hidden" formControlName="propertiesId">
+
+    <div class="form-row">
+      <div class="form-group col-md-6"> <label for="ownerId">Owner ID</label>
+        <br>
+        <input pInputText type="number" id="ownerId" formControlName="ownerId" />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="status">Status</label>
+        <br>
+        <input pInputText type="text" id="status" formControlName="status" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="propertyName">Property Eircode</label>
+        <br>
+        <input pInputText type="text" id="propertyEircode" formControlName="propertyEircode" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="propertyName">Property Name</label>
+        <br>
+        <input pInputText type="text" id="propertyName" formControlName="propertyName" />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="rentalValue">Rental Value</label>
+        <br>
+        <input pInputText type="number" id="rentalValue" formControlName="rentalValue" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="propertyType">Property Type</label>
+        <br>
+        <input pInputText type="text" id="propertyType" formControlName="propertyType" />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="bedrooms">Bedrooms</label>
+        <br>
+        <input pInputText type="number" id="bedrooms" formControlName="bedrooms" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="bathrooms">Bathrooms</label>
+        <br>
+        <input pInputText type="number" id="bathrooms" formControlName="bathrooms" />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="parkingSpaces">Parking Spaces</label>
+        <br>
+        <input pInputText type="number" id="parkingSpaces" formControlName="parkingSpaces" />
+      </div>
+    </div>
+
+    <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="propertyDescription">Description</label>
+      <br>
+      <textarea pInputTextarea id="propertyDescription" formControlName="propertyDescription" [rows]="3" [cols]="60"></textarea>
+    </div>
+
+    <div class="form-group col-md-12">
+      <label for="features">Features</label>
+      <br>
+      <textarea pInputTextarea id="features" formControlName="features" [rows]="3" [cols]="60"></textarea>
+    </div>
+
+    <button pButton type="submit">{{ editingProperty ? 'Update Property' : 'Create New Property' }}</button>
+  </div>
+  </div>
+</form>
+
+
+<p-table [value]="properties" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Owner ID</th>
+      <th>Status</th>
+      <th>Property Eircode</th>
+      <th>Property Name</th>
+      <th>Rental Value</th>
+      <th>Property Type</th>
+      <th>Description</th>
+      <th>Bedrooms</th>
+      <th>Bathrooms</th>
+      <th>Parking Spaces</th>
+      <th>Features</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-property>
+    <tr>
+      <td>{{ property.propertiesId }}</td>
+      <td>{{ property.ownerId }}</td>
+      <td>{{ property.status }}</td>
+      <td>{{ property.propertyEircode }}</td>
+      <td>{{ property.propertyName }}</td>
+      <td>{{ property.rentalValue }}</td>
+      <td>{{ property.propertyType }}</td>
+      <td>{{ property.propertyDescription }}</td>
+      <td>{{ property.bedrooms }}</td>
+      <td>{{ property.bathrooms }}</td>
+      <td>{{ property.parkingSpaces }}</td>
+      <td>{{ property.features }}</td>
+      <td>
+        <button pButton type="button" icon="pi pi-pencil" (click)="editProperty(property)" label="Edit"></button>
+        <button pButton type="button" icon="pi pi-trash" (click)="deleteProperty(property.propertiesId)" style="color: white; background-color: red;" label="Delete"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

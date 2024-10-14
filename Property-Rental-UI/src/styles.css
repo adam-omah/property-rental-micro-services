@@ -1,1 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.text-center {
+  text-align: center;
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -5px;
+  margin-left: -5px !important;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group.col-md-6 {
+  margin: 5px;
+}
+
+button[pButton] {
+  margin-top: 10px;
+}
+
+p-table {
+  margin-top: 20px;
+}
+
+p-table th, p-table td {
+  text-align: left;
+  padding: 8px;
+}
+
+p-table th {
+  background-color: #f4f4f4;
+}
+
+p-table td button {
+  margin-right: 8px;
+}
+
+.p-datatable {
+  margin-top: 20px;
+}

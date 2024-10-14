@@ -1,1 +1,117 @@
-<p>rentals works!</p>
+<form [formGroup]="rentalForm" (ngSubmit)="saveRental()" class="form-container">
+  <div>
+    <h2 class="text-center">{{ editingRental ? 'Update Rental' : 'Create New Rental' }}</h2>
+    <input type="hidden" formControlName="rentalsId">
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="tenantEmail">Tenant Email</label> <br>
+        <p-autoComplete
+          id="tenantEmail"
+          [suggestions]="filteredTenants"
+          (completeMethod)="filterTenants($event)"
+          field="tenantEmail"
+          [dropdown]="true"
+          placeholder="Enter tenant email"
+          (onSelect)="onTenantSelect($event)"
+          [formControl]="temporaryTenantEmail"
+        >
+        </p-autoComplete>
+        <input type="hidden" formControlName="tenantId"> <!-- Hidden field updated on select -->
+      </div>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="propertyEircode">Property Eircode</label> <br>
+      <p-autoComplete
+        id="propertyEircode"
+        [suggestions]="filteredProperties"
+        (completeMethod)="filterProperties($event)"
+        field="propertyEircode"
+        [dropdown]="true"
+        placeholder="Enter property eircode"
+        (onSelect)="onPropertySelect($event)"
+        [formControl]="temporaryPropertyEircode"
+      >
+      </p-autoComplete>
+      <input type="hidden" formControlName="propertyId"> <!-- Hidden field updated on select -->
+    </div>
+
+    <div class="form-group">
+      <label for="rentalType">Rental Type</label>
+      <br>
+      <select pInputText id="rentalType" formControlName="rentalType">
+        <option *ngFor="let type of rentalTypes | keyvalue" [value]="type.value">{{ type.key }}</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="rentalCost">Rental Cost</label>
+        <br>
+        <input pInputText type="number" id="rentalCost" formControlName="rentalCost" />
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="depositPaid">Deposit Paid</label>
+        <br>
+        <input pInputText type="number" id="depositPaid" formControlName="depositPaid" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="additionalTenantIds">Additional Tenant IDs (comma-separated)</label>
+      <br>
+      <input pInputText type="text" id="additionalTenantIds" formControlName="additionalTenantIds" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="startDate">Start Date</label>
+        <br>
+        <p-calendar id="startDate" formControlName="startDate" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="endDate">End Date</label>
+        <br>
+        <p-calendar id="endDate" formControlName="endDate" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+    </div>
+
+  </div>
+  <button pButton type="submit">{{ editingRental ? 'Update Rental' : 'Create New Rental' }}</button>
+</form>
+
+<p-table [value]="rentals" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Tenant ID</th>
+      <th>Property ID</th>
+      <th>Rental Type</th>
+      <th>Rental Cost</th>
+      <th>Deposit Paid</th>
+      <th>Additional Tenant IDs</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rental>
+    <tr>
+      <td>{{ rental.rentalsId }}</td>
+      <td>{{ rental.tenantId }}</td>
+      <td>{{ rental.propertyId }}</td>
+      <td>{{ rental.rentalType }}</td>
+      <td>{{ rental.rentalCost }}</td>
+      <td>{{ rental.depositPaid }}</td>
+      <td>{{ rental.additionalTenantIds }}</td>
+      <td>{{ rental.startDate }}</td>
+      <td>{{ rental.endDate }}</td>
+      <td>
+        <button pButton type="button" icon="pi pi-pencil" (click)="editRental(rental)" label="Edit"></button>
+        <button pButton type="button" icon="pi pi-trash" (click)="deleteRental(rental.rentalsId)" style="color: white; background-color: red;" label="Delete"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

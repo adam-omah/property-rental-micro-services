@@ -10,7 +10,7 @@ import java.util.Optional;
 
 // Annotation
 @RestController
-
+@CrossOrigin(origins = "http://localhost:4200")
 // Class
 public class PropertiesController {
 
