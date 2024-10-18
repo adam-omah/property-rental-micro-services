@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -44,21 +45,28 @@ public class Rentals {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date endDate;
 
+
+    @Value("${PROPERTIES_SERVICE_URL}")
+    private static String propertiesServiceUrl;
+
     // Custom builder with logic for rental cost
     @Builder(builderMethodName = "rentalsBuilder")
-    public static Rentals rentalsBuilder(String tenantId, String propertyId, RentalType rentalType,
+    public static Rentals rentalsBuilder(String tenantId, String propertyId, RentalType rentalType,float rentalCost,
                                          float depositPaid, String additionalTenantIds, Date startDate, Date endDate) {
+
         Rentals rentals = new Rentals();
         rentals.tenantId = tenantId;
         rentals.propertyId = propertyId;
         rentals.rentalType = rentalType;
+        rentals.rentalCost = rentalCost;
         rentals.depositPaid = depositPaid;
         rentals.additionalTenantIds = additionalTenantIds;
         rentals.startDate = startDate;
         rentals.endDate = endDate;
-
         // Calculate and set rentalCost if null
+        System.out.println(rentals);
         if (rentals.rentalCost == 0) {
+            System.out.println("Entered Here!");
             rentals.rentalCost = calculateRentalValue(propertyId, rentalType);
         }
         return rentals;
@@ -74,8 +82,9 @@ public class Rentals {
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         try {
+            log.info(propertiesServiceUrl);
             ResponseEntity<Properties> response = restTemplate.exchange(
-                    "http://localhost:8084/properties/" + propertyId,
+                    "http://property-rental-micro-services-properties-service-1:8084" + "/properties/" + propertyId,
                     HttpMethod.GET,
                     entity,
                     Properties.class
@@ -84,6 +93,7 @@ public class Rentals {
             if (response.getStatusCode() == HttpStatus.OK) {
                 Properties propertyData = response.getBody();
                 log.info(response.toString());
+                log.info(String.valueOf(propertyData.getRentalValue()));
                 if (propertyData != null) {
                     switch (rentalType) {
                         case STANDARD -> {

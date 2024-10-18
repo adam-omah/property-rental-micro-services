@@ -93,6 +93,7 @@ export class RentalsComponent implements OnInit {
 
       if (rentalData.rentalsId === 0) {
         // Create new rental
+        console.log(this.rentalForm.value);
         this.rentalService.createRental(rentalData).subscribe(() => {
           this.getRentals();
           this.displayDialog = false;
@@ -107,17 +108,6 @@ export class RentalsComponent implements OnInit {
         });
       }
     }
-  }
-
-  cancelEdit(): void {
-    this.displayDialog = false;
-    this.rentalForm.reset();
-  }
-
-  openNewRentalDialog(): void {
-    this.editingRental = null;
-    this.rentalForm.reset();
-    this.displayDialog = true;
   }
 
   deleteRental(id: number): void {

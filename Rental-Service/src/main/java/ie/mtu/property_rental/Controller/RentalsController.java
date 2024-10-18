@@ -23,6 +23,7 @@ public class RentalsController {
 
         // Using the custom builder
         Rentals customRental = Rentals.rentalsBuilder(rentals.getTenantId(), rentals.getPropertyId(), rentals.getRentalType(),
+                rentals.getRentalCost(),
                 rentals.getDepositPaid(), rentals.getAdditionalTenantIds(),
                 rentals.getStartDate(), rentals.getEndDate());
         return rentalsService.saveRentals(customRental);

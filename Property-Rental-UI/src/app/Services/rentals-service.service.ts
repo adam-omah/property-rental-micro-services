@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {Rental} from "../Models/Rental.model";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Injectable} from "@angular/core";
@@ -20,14 +20,35 @@ export class RentalService {
     };
   }
 
-  getRentals(): Observable<Rental[]> {
-    return this.http.get<Rental[]>(this.apiUrl);
-  }
+private parseDate(dateString: string): Date
+{
+  const parts = dateString.split('/').map(part => parseInt(part, 10));
+  return new Date(parts[0], parts[1] - 1, parts[2]);
+}
 
-  getRental(id: number): Observable<Rental> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Rental>(url);
-  }
+getRentals(): Observable<Rental[]> {
+  return this.http.get<Rental[]>(this.apiUrl).pipe(
+    map(rentals => rentals.map(rental => ({
+      ...rental,
+      startDate: this.parseDate(rental.startDate as unknown as string),
+      endDate: this.parseDate(rental.endDate as unknown as string)
+    }))),
+    catchError(this.handleError)
+  );
+}
+
+getRental(id: number): Observable<Rental> {
+  const url = `${this.apiUrl}/${id}`;
+  return this.http.get<Rental>(url).pipe(
+    map(rental => ({
+      ...rental,
+      startDate: this.parseDate(rental.startDate as unknown as string),
+      endDate: this.parseDate(rental.endDate as unknown as string)
+    })),
+    catchError(this.handleError)
+  );
+}
+
 
   createRental(rental: Rental): Observable<Rental> {
     const formattedRental = this.formatDates(rental);
