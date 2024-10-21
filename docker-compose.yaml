@@ -7,10 +7,19 @@ services:
 
   rentals-service:
     build: ./rental-service # Path to your Rentals service Dockerfile
-    container_name: property-rental-micro-services-rental-service-1
+    container_name: rental-service
     ports:
       - "8085:8085"
     environment:
       PROPERTIES_SERVICE_URL: "http://properties-service:8084"
     depends_on:
       - properties-service
+
+  property-rental-ui:
+    build: ./Property-Rental-UI
+    container_name: property-rental-ui
+    ports:
+      - "4200:4200"
+    depends_on:
+      - properties-service
+      - rentals-service

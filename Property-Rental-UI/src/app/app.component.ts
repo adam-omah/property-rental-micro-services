@@ -13,9 +13,14 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Properties',
+        label: 'Properties For Rent',
         icon: 'pi pi-fw pi-users',
         routerLink: ['/']
+      },
+      {
+        label: 'Properties',
+        icon: 'pi pi-fw pi-users',
+        routerLink: ['/properties']
       },
       {
         label: 'Owners',

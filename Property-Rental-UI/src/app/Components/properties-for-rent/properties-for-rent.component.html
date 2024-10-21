@@ -1,0 +1,63 @@
+<p-table [value]="properties" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Owner ID</th>
+      <th>Status</th>
+      <th>Property Eircode</th>
+      <th>Property Name</th>
+      <th>Rental Value</th>
+      <th>Property Type</th>
+      <th>Description</th>
+      <th>Bedrooms</th>
+      <th>Bathrooms</th>
+      <th>Parking Spaces</th>
+      <th>Features</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-property>
+    <tr>
+      <td>{{ property.propertiesId }}</td>
+      <td>{{ property.ownerId }}</td>
+      <td>{{ property.status }}</td>
+      <td>{{ property.propertyEircode }}</td>
+      <td>{{ property.propertyName }}</td>
+      <td>{{ property.rentalValue }}</td>
+      <td>{{ property.propertyType }}</td>
+      <td>{{ property.propertyDescription }}</td>
+      <td>{{ property.bedrooms }}</td>
+      <td>{{ property.bathrooms }}</td>
+      <td>{{ property.parkingSpaces }}</td>
+      <td>{{ property.features }}</td>
+      <td>
+        <button pButton type="button" (click)="onRentProperty(property)" label="Rent"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="showTenantDialog" header="Select or Add Tenant" [modal]="true" [style]="{ width: '50vw' }">
+  <p-autoComplete [(ngModel)]="selectedTenant" [suggestions]="filteredTenants" (completeMethod)="filterTenants($event)"
+                  field="tenantEmail" (onSelect)="onTenantSelect($event)">
+  </p-autoComplete>
+
+  <div class="mt-3">
+    <h3>Add New Tenant</h3>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
+        <label htmlFor="name">Name</label>
+        <input pInputText id="name" type="text" [(ngModel)]="newTenant.tenantName" required>
+      </div>
+      <div class="p-field p-col-12">
+        <label htmlFor="email">Email</label>
+        <input pInputText id="email" type="email" [(ngModel)]="newTenant.tenantEmail" required>
+      </div>
+      <div class="p-field p-col-12">
+        <label htmlFor="phone">Phone</label>
+        <input pInputText id="phone" type="text" [(ngModel)]="newTenant.tenantPhone">
+      </div>
+    </div>
+    <button pButton type="button" (click)="addNewTenant()" label="Add Tenant"></button>
+  </div>
+</p-dialog>

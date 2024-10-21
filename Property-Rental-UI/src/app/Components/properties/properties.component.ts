@@ -40,7 +40,6 @@ export class PropertiesComponent implements OnInit {
   ) {
     this.propertyForm = this.fb.group({
       // Initialize the form here
-      // ... your form controls ...
     });
   }
 

@@ -23,6 +23,7 @@ import {TenantsComponent} from "./Components/tenants/tenants.component";
 import {OwnersComponent} from "./Components/owners/owners.component";
 import {PropertiesComponent} from "./Components/properties/properties.component";
 import {RentalsComponent} from "./Components/rentals/rentals.component";
+import {PropertiesForRentComponent} from "./Components/properties-for-rent/properties-for-rent.component";
 
 
 
@@ -50,7 +51,8 @@ import {RentalsComponent} from "./Components/rentals/rentals.component";
     TenantsComponent,
     OwnersComponent,
     PropertiesComponent,
-    RentalsComponent
+    RentalsComponent,
+    PropertiesForRentComponent
   ],
   providers: [ConfirmationService],
   bootstrap: [AppComponent],
