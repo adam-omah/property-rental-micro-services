@@ -1,6 +1,7 @@
 package ie.mtu.property_rental.Entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import ie.mtu.property_rental.Configuration.RentalsConfig;
 import ie.mtu.property_rental.models.RentalType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
@@ -24,6 +26,7 @@ import java.util.Map;
 @Entity
 @Data
 public class Rentals {
+
     private static final Logger log = LoggerFactory.getLogger(Rentals.class);
     @Id
     @SequenceGenerator(name = "rentals_seq", sequenceName = "rentals_seq", allocationSize = 1)
@@ -46,8 +49,7 @@ public class Rentals {
     private Date endDate;
 
 
-    @Value("${PROPERTIES_SERVICE_URL}")
-    private static String propertiesServiceUrl;
+
 
     // Custom builder with logic for rental cost
     @Builder(builderMethodName = "rentalsBuilder")
@@ -64,10 +66,11 @@ public class Rentals {
         rentals.startDate = startDate;
         rentals.endDate = endDate;
         // Calculate and set rentalCost if null
-        System.out.println(rentals);
+        log.info(String.valueOf(rentals));
         if (rentals.rentalCost == 0) {
             System.out.println("Entered Here!");
             rentals.rentalCost = calculateRentalValue(propertyId, rentalType);
+            return rentals;
         }
         return rentals;
     }
@@ -82,9 +85,11 @@ public class Rentals {
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         try {
-            log.info(propertiesServiceUrl);
+
+            String propertiesServiceUrl = RentalsConfig.getPropertiesServiceUrl();
+            log.warn(propertiesServiceUrl);
             ResponseEntity<Properties> response = restTemplate.exchange(
-                    "http://property-rental-micro-services-properties-service-1:8084" + "/properties/" + propertyId,
+                    propertiesServiceUrl + "/properties/" + propertyId,
                     HttpMethod.GET,
                     entity,
                     Properties.class
@@ -93,7 +98,7 @@ public class Rentals {
             if (response.getStatusCode() == HttpStatus.OK) {
                 Properties propertyData = response.getBody();
                 log.info(response.toString());
-                log.info(String.valueOf(propertyData.getRentalValue()));
+                log.warn(String.valueOf(propertyData.getRentalValue()));
                 if (propertyData != null) {
                     switch (rentalType) {
                         case STANDARD -> {

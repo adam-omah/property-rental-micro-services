@@ -1,7 +1,7 @@
 services:
   properties-service:
     build: ./property-service  # Path to your Properties service Dockerfile
-    container_name: property-rental-micro-services-properties-service-1
+    container_name: properties-service
     ports:
       - "8084:8084"
 
