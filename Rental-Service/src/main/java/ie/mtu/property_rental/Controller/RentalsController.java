@@ -21,12 +21,17 @@ public class RentalsController {
     public Rentals saveRentals(
             @RequestBody Rentals rentals) {
 
-        // Using the custom builder
-        Rentals customRental = Rentals.rentalsBuilder(rentals.getTenantId(), rentals.getPropertyId(), rentals.getRentalType(),
-                rentals.getRentalCost(),
-                rentals.getDepositPaid(), rentals.getAdditionalTenantIds(),
-                rentals.getStartDate(), rentals.getEndDate());
-        return rentalsService.saveRentals(customRental);
+
+        Rentals customRentalNew = new Rentals.RentalsBuilder(
+                rentals.getPropertyId(),
+                rentals.getTenantId(),
+                rentals.getEndDate())
+                .setRentalType(rentals.getRentalType())
+                .setRentalCost(rentals.getRentalCost())
+                .setAdditionalTenants(rentals.getAdditionalTenantIds())
+                .setDepositPaid(rentals.getDepositPaid()).setEndDate(rentals.getEndDate()).build();
+
+        return rentalsService.saveRentals(customRentalNew);
     }
 
     // Read operation

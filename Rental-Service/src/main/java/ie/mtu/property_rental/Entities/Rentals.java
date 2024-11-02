@@ -5,26 +5,22 @@ import ie.mtu.property_rental.Configuration.RentalsConfig;
 import ie.mtu.property_rental.models.RentalType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
 
 import java.sql.Date;
 import java.util.Collections;
-import java.util.Map;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Rentals {
 
     private static final Logger log = LoggerFactory.getLogger(Rentals.class);
@@ -48,31 +44,64 @@ public class Rentals {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date endDate;
 
+    public Rentals(RentalsBuilder rentalsBuilder) {
+    }
 
 
 
     // Custom builder with logic for rental cost
-    @Builder(builderMethodName = "rentalsBuilder")
-    public static Rentals rentalsBuilder(String tenantId, String propertyId, RentalType rentalType,float rentalCost,
-                                         float depositPaid, String additionalTenantIds, Date startDate, Date endDate) {
+    public static class RentalsBuilder{
+        // Required Parameters
+        private String tenantId;
+        private String propertyId;
+        private Date startDate;
 
-        Rentals rentals = new Rentals();
-        rentals.tenantId = tenantId;
-        rentals.propertyId = propertyId;
-        rentals.rentalType = rentalType;
-        rentals.rentalCost = rentalCost;
-        rentals.depositPaid = depositPaid;
-        rentals.additionalTenantIds = additionalTenantIds;
-        rentals.startDate = startDate;
-        rentals.endDate = endDate;
-        // Calculate and set rentalCost if null
-        log.info(String.valueOf(rentals));
-        if (rentals.rentalCost == 0) {
-            System.out.println("Entered Here!");
-            rentals.rentalCost = calculateRentalValue(propertyId, rentalType);
-            return rentals;
+
+        // optional Parameters
+        private float rentalCost = 0;
+        private RentalType rentalType = RentalType.STANDARD;
+        private String additionalTenantIds = null;
+        private Date endDate = null;
+        private float depositPaid = 0;
+
+
+        public RentalsBuilder(String propertyId, String tenantId, Date startDate) {
+            this.tenantId = tenantId;
+            this.propertyId = propertyId;
+            this.startDate = startDate;
         }
-        return rentals;
+
+        public RentalsBuilder setRentalCost(float rentalCost) {
+            this.rentalCost = rentalCost;
+            if (this.rentalCost <= 0){
+                this.rentalCost = calculateRentalValue(this.propertyId, this.rentalType);
+            }
+            return this;
+        }
+
+        public RentalsBuilder setRentalType(RentalType rentalType) {
+            this.rentalType = rentalType;
+            return this;
+        }
+
+        public RentalsBuilder setAdditionalTenants(String additionalTenantIds) {
+            this.additionalTenantIds = additionalTenantIds;
+            return this;
+        }
+
+        public RentalsBuilder setDepositPaid(float depositPaid) {
+            this.depositPaid = depositPaid;
+            return this;
+        }
+
+        public RentalsBuilder setEndDate(Date endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public Rentals build(){
+            return new Rentals(this);
+        }
     }
 
     private static float calculateRentalValue(String propertyId, RentalType rentalType) {
