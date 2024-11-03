@@ -14,6 +14,7 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Collections;
 
@@ -28,8 +29,8 @@ public class Rentals {
     @SequenceGenerator(name = "rentals_seq", sequenceName = "rentals_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rentals_seq")
     private Long rentalsId;
-    private String tenantId;
-    private String propertyId;
+    private Long tenantId;
+    private Long propertyId;
     @Enumerated(EnumType.STRING)
     private RentalType rentalType = RentalType.STANDARD;
     private float rentalCost;
@@ -52,8 +53,8 @@ public class Rentals {
     // Custom builder with logic for rental cost
     public static class RentalsBuilder{
         // Required Parameters
-        private String tenantId;
-        private String propertyId;
+        private Long tenantId;
+        private Long propertyId;
         private Date startDate;
 
 
@@ -65,7 +66,7 @@ public class Rentals {
         private float depositPaid = 0;
 
 
-        public RentalsBuilder(String propertyId, String tenantId, Date startDate) {
+        public RentalsBuilder(Long propertyId, Long tenantId, Date startDate) {
             this.tenantId = tenantId;
             this.propertyId = propertyId;
             this.startDate = startDate;
@@ -73,9 +74,6 @@ public class Rentals {
 
         public RentalsBuilder setRentalCost(float rentalCost) {
             this.rentalCost = rentalCost;
-            if (this.rentalCost <= 0){
-                this.rentalCost = calculateRentalValue(this.propertyId, this.rentalType);
-            }
             return this;
         }
 
@@ -100,11 +98,26 @@ public class Rentals {
         }
 
         public Rentals build(){
-            return new Rentals(this);
+            if (this.rentalCost <= 0) {
+                this.rentalCost = calculateRentalValue(this.propertyId, this.rentalType);
+            }
+
+            Rentals newRentals = new Rentals();
+
+            newRentals.setTenantId(this.tenantId);
+            newRentals.setPropertyId(this.propertyId);
+            newRentals.setStartDate(this.startDate);
+            newRentals.setRentalType(this.rentalType);
+            newRentals.setRentalCost(this.rentalCost);
+            newRentals.setDepositPaid(this.depositPaid);
+            newRentals.setAdditionalTenantIds(this.additionalTenantIds);
+            newRentals.setEndDate(this.endDate);
+
+            return newRentals;
         }
     }
 
-    private static float calculateRentalValue(String propertyId, RentalType rentalType) {
+    private static float calculateRentalValue(Long propertyId, RentalType rentalType) {
         RestTemplate restTemplate = new RestTemplateBuilder()
                 .build();
 

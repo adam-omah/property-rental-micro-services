@@ -58,6 +58,7 @@ export class PropertiesComponent implements OnInit {
       propertyName: ['', Validators.required],
       rentalValue: [0, Validators.required],
       propertyType: ['', Validators.required],
+      propertyEircode:['', Validators.required],
       propertyDescription: [''],
       bedrooms: [0, Validators.required],
       bathrooms: [0, Validators.required],

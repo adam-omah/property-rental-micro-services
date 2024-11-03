@@ -38,17 +38,17 @@ CREATE SEQUENCE IF NOT EXISTS rentals_seq START WITH 1 INCREMENT BY 1;
 
 -- Insert rentals individually, retrieving tenant_id using subqueries
 INSERT INTO rentals (rentals_id, tenant_id, property_id, rental_type, rental_cost, deposit_paid, additional_tenant_ids, start_date, end_date)
-SELECT nextval('rentals_seq'), t.tenant_id, 101, 'STANDARD', 1200.00, 500.00, NULL, '2024-01-15', '2025-01-14'
+SELECT nextval('rentals_seq'), t.tenant_id, 1, 'STANDARD', 1200.00, 500.00, NULL, '2024-01-15', '2025-01-14'
 FROM tenant t
 WHERE t.tenant_email = 'john.doe@example.com';  -- Assuming John Doe is the tenant
 
 INSERT INTO rentals (rentals_id, tenant_id, property_id, rental_type, rental_cost, deposit_paid, additional_tenant_ids, start_date, end_date)
-SELECT nextval('rentals_seq'), t.tenant_id, 102, 'SHORT', 1800.00, 700.00, NULL, '2024-02-20', '2025-02-19'
+SELECT nextval('rentals_seq'), t.tenant_id, 2, 'SHORT', 1800.00, 700.00, NULL, '2024-02-20', '2025-02-19'
 FROM tenant t
 WHERE t.tenant_email = 'jane.smith@example.com'; -- Assuming Jane Smith is the tenant
 
 
 INSERT INTO rentals (rentals_id, tenant_id, property_id, rental_type, rental_cost, deposit_paid, additional_tenant_ids, start_date, end_date)
-SELECT nextval('rentals_seq'), t.tenant_id, 103, 'LONG', 1500.00, 600.00, NULL, '2024-03-10', '2025-03-09'
+SELECT nextval('rentals_seq'), t.tenant_id, 3, 'LONG', 1500.00, 600.00, NULL, '2024-03-10', '2025-03-09'
 FROM tenant t
-WHERE t.tenant_email = 'david.lee@example.com'; -- Assuming David Lee is the tenant
+WHERE t.tenant_email = 'david.lee@example.com'; -- Assuming David is the tenant

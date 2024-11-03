@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
 import {Property} from "../Models/Property.model";
 
@@ -54,7 +54,8 @@ export class PropertiesService {
   }
 
   getAvailableProperties(): Observable<Property[]> {
-    return this.http.get<Property[]>(`${this.apiUrl}?status=AVAILABLE`);
+    const params = new HttpParams().set('status', 'AVAILABLE');
+    return this.http.get<Property[]>(this.apiUrl, { params });
   }
 }
 

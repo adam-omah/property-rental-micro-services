@@ -27,9 +27,10 @@ public class PropertiesController {
 
     // Read operation
     @GetMapping("/properties")
-    public List<Properties> fetchPropertiesList()
-    {
-        return propertiesService.fetchPropertiesList();
+    public List<Properties> fetchPropertiesList(
+            @RequestParam(name = "status", required = false) String status  // Add this parameter
+    ) {
+        return propertiesService.fetchPropertiesList(status); // Pass status to the service
     }
     @GetMapping("/properties/{id}")
     public Optional<Properties> fetchPropertiesFromID(@PathVariable Long id)

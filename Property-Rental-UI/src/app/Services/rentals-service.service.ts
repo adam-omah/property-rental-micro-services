@@ -52,6 +52,7 @@ getRental(id: number): Observable<Rental> {
 
   createRental(rental: Rental): Observable<Rental> {
     const formattedRental = this.formatDates(rental);
+    console.log(rental);
     return this.http.post<Rental>(this.apiUrl, formattedRental);
   }
 

@@ -29,10 +29,14 @@ public class PropertiesService {
     }
 
     // Read All operation
-    public List<Properties> fetchPropertiesList()
-    {
-        return (List<Properties>)
-                propertiesRepository.findAll();
+    public List<Properties> fetchPropertiesList(String status) {
+        if (status != null && !status.isEmpty()) {
+            // Filter based on the provided status
+            return propertiesRepository.findByStatus(status);
+        } else {
+            // Return all properties if no status is specified
+            return propertiesRepository.findAll();
+        }
     }
 
 

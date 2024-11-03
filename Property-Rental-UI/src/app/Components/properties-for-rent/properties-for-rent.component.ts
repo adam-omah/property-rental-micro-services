@@ -51,6 +51,7 @@ export class PropertiesForRentComponent implements OnInit {
 
   ngOnInit() {
     this.getProperties();
+    console.log(this.properties)
   }
 
   getProperties(): void {
@@ -58,6 +59,7 @@ export class PropertiesForRentComponent implements OnInit {
     this.propertiesService
       .getAvailableProperties()
       .subscribe((properties) => (this.properties = properties));
+
   }
 
   onRentProperty(property: Property) {
@@ -77,7 +79,6 @@ export class PropertiesForRentComponent implements OnInit {
   onTenantSelect(event: AutoCompleteSelectEvent) {
     // Access the selected tenant from the event object
     this.selectedTenant = event.value as Tenant;
-
     console.log("Selected Tenant:", this.selectedTenant);
     // Add logic here to handle tenant selection (e.g., navigate to rental form)
     this.showTenantDialog = false;

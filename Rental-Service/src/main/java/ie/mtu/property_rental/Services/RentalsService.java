@@ -36,13 +36,14 @@ public class RentalsService {
         Rentals rentalsDB = rentalsRepository.findById(rentalsId)
                 .orElseThrow(() -> new IllegalArgumentException("Rentals not found with ID: " + rentalsId));
 
-        Optional.ofNullable(rentals.getTenantId())
-                .filter(tenantId -> !tenantId.trim().isEmpty())
-                .ifPresent(rentalsDB::setTenantId);
 
-        Optional.ofNullable(rentals.getPropertyId())
-                .filter(propertyId -> !propertyId.trim().isEmpty())
-                .ifPresent(rentalsDB::setPropertyId);
+        if (rentals.getTenantId() != 0) {
+            rentalsDB.setTenantId(rentals.getTenantId());
+        }
+
+        if (rentals.getPropertyId() != 0) {
+            rentalsDB.setPropertyId(rentals.getPropertyId());
+        }
 
         if (rentals.getRentalCost() != 0) { // Check if a new rentalCost is provided
             rentalsDB.setRentalCost(rentals.getRentalCost());
