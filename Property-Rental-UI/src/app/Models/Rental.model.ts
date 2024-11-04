@@ -3,13 +3,13 @@
 import { RentalType } from '../Enums/rental-type.enum'; // Import RentalType if it's an enum
 
 export interface Rental {
-  rentalsId: number;
-  tenantId: string;
-  propertyId: string;
+  rentalsId: number | null;
+  tenantId: number;
+  propertyId: number;
   rentalType: RentalType;
   rentalCost: number;
   depositPaid: number;
   additionalTenantIds: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | null;
+  endDate: Date | null;
 }

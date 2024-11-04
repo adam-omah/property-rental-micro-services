@@ -11,6 +11,11 @@ import {DialogModule} from "primeng/dialog";
 import {TenantService} from "../../Services/tenants-service.service";
 import {Tenant} from "../../Models/Tenant.model";
 import {AutoCompleteModule, AutoCompleteSelectEvent} from "primeng/autocomplete";
+import {RentalService} from "../../Services/rentals-service.service";
+import {Rental} from "../../Models/Rental.model";
+import {RentalType} from "../../Enums/rental-type.enum";
+import {CalendarModule} from "primeng/calendar";
+import {KeyValuePipe, NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-properties-for-rent',
@@ -25,6 +30,9 @@ import {AutoCompleteModule, AutoCompleteSelectEvent} from "primeng/autocomplete"
     DialogModule,
     FormsModule,
     AutoCompleteModule,
+    CalendarModule,
+    KeyValuePipe,
+    NgForOf,
   ],
   templateUrl: './properties-for-rent.component.html',
   styleUrl: './properties-for-rent.component.css',
@@ -44,14 +52,30 @@ export class PropertiesForRentComponent implements OnInit {
     tenantPhone: '',
   };
 
+  rentalFormData: Rental = {
+    // Initialize with default values if needed
+    rentalsId: null,
+    tenantId: 0, // Or null, depending on your model
+    propertyId: 0, // Or null
+    rentalType: RentalType.STANDARD, // Or a default value
+    rentalCost: 0,
+    depositPaid: 0,
+    additionalTenantIds: '',
+    startDate: new Date(),
+    endDate: new Date(),
+  };
+
+  showRentalFormDialog: boolean = false;
+
   constructor(
     private propertiesService: PropertiesService,
     private tenantService: TenantService,
+    private rentalService: RentalService, // Inject RentalsService
   ) {}
 
   ngOnInit() {
     this.getProperties();
-    console.log(this.properties)
+    console.log(this.properties);
   }
 
   getProperties(): void {
@@ -59,7 +83,6 @@ export class PropertiesForRentComponent implements OnInit {
     this.propertiesService
       .getAvailableProperties()
       .subscribe((properties) => (this.properties = properties));
-
   }
 
   onRentProperty(property: Property) {
@@ -77,11 +100,46 @@ export class PropertiesForRentComponent implements OnInit {
   }
 
   onTenantSelect(event: AutoCompleteSelectEvent) {
-    // Access the selected tenant from the event object
     this.selectedTenant = event.value as Tenant;
-    console.log("Selected Tenant:", this.selectedTenant);
-    // Add logic here to handle tenant selection (e.g., navigate to rental form)
-    this.showTenantDialog = false;
+    console.log('Selected Tenant:', this.selectedTenant);
+
+    // After selecting a tenant, pre-fill the rental form data
+    this.rentalFormData.tenantId = this.selectedTenant.tenantId;
+
+    this.showTenantDialog = false; //Close the dialog for tenant selection
+    this.showRentalFormDialog = true; // Open the rental form dialog
+  }
+
+  saveRental() {
+    // Set propertyId based on selected property
+    this.rentalFormData.propertyId = this.selectedProperty!.propertiesId;
+
+    this.rentalService.createRental(this.rentalFormData).subscribe(
+      (createdRental) => {
+        console.log('Rental created successfully:', createdRental);
+
+        // Optional: Reset form, navigate to another view, etc.
+        this.rentalFormData = {
+          // Initialize with default values if needed
+          rentalsId: 0,
+          tenantId: 0, // Or null, depending on your model
+          propertyId: 0, // Or null
+          rentalType: RentalType.STANDARD, // Or a default value
+          rentalCost: 0,
+          depositPaid: 0,
+          additionalTenantIds: '',
+          startDate: new Date(),
+          endDate: new Date(),
+        };
+
+        this.showRentalFormDialog = false;
+        this.ngOnInit();
+      },
+      (error) => {
+        console.error('Error creating rental:', error);
+        // Handle error
+      },
+    );
   }
 
   addNewTenant() {
@@ -103,4 +161,6 @@ export class PropertiesForRentComponent implements OnInit {
       },
     );
   }
+
+  protected readonly rentalTypes = RentalType;
 }

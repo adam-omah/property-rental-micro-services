@@ -15,16 +15,36 @@ export class RentalService {
   formatDates(rental: Rental): any {
     return {
       ...rental,
-      startDate: formatDate(rental.startDate, 'dd/MM/yyyy', 'en'),
-      endDate: formatDate(rental.endDate, 'dd/MM/yyyy', 'en')
+      startDate: formatDate(rental.startDate || new Date(), 'dd-MM-yyyy', 'en'),
+      endDate: formatDate(rental.endDate || new Date(), 'dd/MM/yyyy', 'en')
     };
   }
 
-private parseDate(dateString: string): Date
-{
-  const parts = dateString.split('/').map(part => parseInt(part, 10));
-  return new Date(parts[0], parts[1] - 1, parts[2]);
-}
+  private parseDate(dateString: string | null): Date | null {
+    if (!dateString) {  // Handle null or empty string
+      return null;
+    }
+    try {
+      // Attempt parsing
+      const parts = dateString.split('/'); // Or '/' if needed
+      const year = parseInt(parts[2], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const day = parseInt(parts[0], 10);
+      const date = new Date(year, month, day);
+
+      // Check if parsing resulted in a valid date
+      if (isNaN(date.getTime())) {
+        console.error("Invalid date string received:", dateString);
+        return null; // or throw an error if you prefer
+      }
+
+      return date;
+
+    } catch (error) {
+      console.error("Error parsing date:", error);
+      return null; // Or handle the error as needed
+    }
+  }
 
 getRentals(): Observable<Rental[]> {
   return this.http.get<Rental[]>(this.apiUrl).pipe(

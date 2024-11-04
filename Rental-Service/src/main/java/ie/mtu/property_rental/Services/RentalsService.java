@@ -11,8 +11,6 @@ import java.util.Optional;
 
 // Annotation
 @Service
-
-// Class
 public class RentalsService {
 
     @Autowired

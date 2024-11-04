@@ -85,16 +85,16 @@
 <p-table [value]="rentals" responsiveLayout="scroll">
   <ng-template pTemplate="header">
     <tr>
-      <th>ID</th>
-      <th>Tenant ID</th>
-      <th>Property ID</th>
-      <th>Rental Type</th>
-      <th>Rental Cost</th>
-      <th>Deposit Paid</th>
-      <th>Additional Tenant IDs</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>Actions</th>
+      <th id="table_id">ID</th>
+      <th id="table_tenantId">Tenant ID</th>
+      <th id="table_propertyId">Property ID</th>
+      <th id="table_type">Rental Type</th>
+      <th id="table_cost">Rental Cost</th>
+      <th id="table_deposit">Deposit Paid</th>
+      <th id="table_tenatIds">Additional Tenant IDs</th>
+      <th id="table_startDate">Start Date</th>
+      <th id="table_endDate">End Date</th>
+      <th id="table_actions">Actions</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rental>

@@ -1,19 +1,19 @@
 <p-table [value]="properties" responsiveLayout="scroll">
   <ng-template pTemplate="header">
     <tr>
-      <th>ID</th>
-      <th>Owner ID</th>
-      <th>Status</th>
-      <th>Property Eircode</th>
-      <th>Property Name</th>
-      <th>Rental Value</th>
-      <th>Property Type</th>
-      <th>Description</th>
-      <th>Bedrooms</th>
-      <th>Bathrooms</th>
-      <th>Parking Spaces</th>
-      <th>Features</th>
-      <th>Actions</th>
+      <th id="table_id">ID</th>
+      <th id="table_ownerId">Owner ID</th>
+      <th id="table_status">Status</th>
+      <th id="table_eircode">Property Eircode</th>
+      <th id="table_name">Property Name</th>
+      <th id="table_value">Rental Value</th>
+      <th id="table_type">Property Type</th>
+      <th id="table_description">Description</th>
+      <th id="table_bedrooms">Bedrooms</th>
+      <th id="table_bathrooms">Bathrooms</th>
+      <th id="table_parking">Parking Spaces</th>
+      <th id="table_features">Features</th>
+      <th id="table_actions">Actions</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-property>
@@ -60,4 +60,55 @@
     </div>
     <button pButton type="button" (click)="addNewTenant()" label="Add Tenant"></button>
   </div>
+</p-dialog>
+
+<p-dialog [(visible)]="showRentalFormDialog" header="Rental Form" [modal]="true" [style]="{ width: '80vw', height: '90vh' }">
+  <form (ngSubmit)="saveRental()" >
+    <div class="p-field">  </div>
+
+    <div class="p-field">
+      <label for="rentalType">Rental Type</label>
+      <select id="rentalType" [(ngModel)]="rentalFormData.rentalType" name="rentalType">
+        <option *ngFor="let type of rentalTypes | keyvalue" [value]="type.value">{{ type.key }}</option>
+      </select>
+    </div>
+
+    <div class="p-field">
+      <label for="rentalCost">Rental Cost</label>
+      <input pInputText id="rentalCost" type="number" [(ngModel)]="rentalFormData.rentalCost" name="rentalCost" />
+    </div>
+
+    <div class="p-field">
+      <label for="depositPaid">Deposit Paid</label>
+      <input pInputText id="depositPaid" type="number" [(ngModel)]="rentalFormData.depositPaid" name="depositPaid" />
+    </div>
+
+    <div class="p-field">
+      <label for="additionalTenantIds">Additional Tenant IDs (comma-separated)</label>
+      <input pInputText type="text" id="additionalTenantIds" [(ngModel)]="rentalFormData.additionalTenantIds" name="additionalTenantIds" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="startDate">Start Date</label>
+        <p-calendar
+          id="startDate"
+          [(ngModel)]="rentalFormData.startDate"
+          dateFormat="dd/mm/yy"
+          name="startDate"
+          appendTo="body">  </p-calendar>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="endDate">End Date</label>
+        <p-calendar id="endDate"
+                    [(ngModel)]="rentalFormData.endDate"
+                    dateFormat="dd/mm/yy"
+                    name="endDate"
+                    appendTo="body"></p-calendar>
+      </div>
+    </div>
+
+    <button pButton type="submit" label="Save Rental"></button>
+  </form>
 </p-dialog>

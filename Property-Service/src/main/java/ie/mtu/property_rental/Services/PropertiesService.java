@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 // Annotation
 @Service
-
-// Class
 public class PropertiesService {
 
     @Autowired

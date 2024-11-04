@@ -60,8 +60,8 @@ export class RentalsComponent implements OnInit {
   ) {
     this.rentalForm = this.fb.group({
       rentalsId: [0],
-      tenantId: ['', Validators.required],
-      propertyId: ['', Validators.required],
+      tenantId: [0, Validators.required],
+      propertyId: [0, Validators.required],
       rentalType: [RentalType.STANDARD, Validators.required],
       rentalCost: [0, Validators.required],
       depositPaid: [0, Validators.required],
