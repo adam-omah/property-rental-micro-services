@@ -15,7 +15,7 @@ export class RentalService {
   formatDates(rental: Rental): any {
     return {
       ...rental,
-      startDate: formatDate(rental.startDate || new Date(), 'dd-MM-yyyy', 'en'),
+      startDate: formatDate(rental.startDate || new Date(), 'dd/MM/yyyy', 'en'),
       endDate: formatDate(rental.endDate || new Date(), 'dd/MM/yyyy', 'en')
     };
   }
@@ -26,7 +26,7 @@ export class RentalService {
     }
     try {
       // Attempt parsing
-      const parts = dateString.split('/'); // Or '/' if needed
+      const parts = dateString.split('/');
       const year = parseInt(parts[2], 10);
       const month = parseInt(parts[1], 10) - 1;
       const day = parseInt(parts[0], 10);
@@ -35,14 +35,14 @@ export class RentalService {
       // Check if parsing resulted in a valid date
       if (isNaN(date.getTime())) {
         console.error("Invalid date string received:", dateString);
-        return null; // or throw an error if you prefer
+        return null;
       }
 
       return date;
 
     } catch (error) {
       console.error("Error parsing date:", error);
-      return null; // Or handle the error as needed
+      return null;
     }
   }
 
