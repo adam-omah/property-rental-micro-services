@@ -55,6 +55,11 @@ export class OwnersComponent implements OnInit {
     this.ownerService.getOwners().subscribe((owners) => (this.owners = owners));
   }
 
+  resetForm() {
+    this.ownerForm.reset();
+    this.editingOwner = null; // Reset selected owner
+  }
+
   editOwner(owner: Owner): void {
     this.editingOwner = { ...owner };
     this.ownerForm.patchValue(this.editingOwner);
@@ -70,29 +75,19 @@ export class OwnersComponent implements OnInit {
         this.ownerService.createOwner(ownerData).subscribe(() => {
           this.getOwners();
           this.displayDialog = false;
-          this.ownerForm.reset();
+          this.resetForm();
         });
       } else {
         // Update existing owner
         this.ownerService.updateOwner(ownerData).subscribe(() => {
           this.getOwners();
           this.displayDialog = false;
-          this.ownerForm.reset();
+          this.resetForm();
         });
       }
     }
   }
 
-  cancelEdit(): void {
-    this.displayDialog = false;
-    this.ownerForm.reset();
-  }
-
-  openNewOwnerDialog(): void {
-    this.editingOwner = null;
-    this.ownerForm.reset();
-    this.displayDialog = true;
-  }
 
   deleteOwner(id: number): void {
     if (confirm('Are you sure you want to delete this owner?')) {

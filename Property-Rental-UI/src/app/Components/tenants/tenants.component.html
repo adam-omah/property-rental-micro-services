@@ -22,8 +22,9 @@
       <br>
       <input pInputText type="text" id="tenantPhone" formControlName="tenantPhone" />
     </div>
-      <div class="form-group col-md-6">
+      <div class="form-row">
         <button pButton type="submit">{{ editingTenant ? 'Update Tenant' : 'Create New Tenant' }}</button>
+        <button pButton type="button" (click)="resetForm()" label="Reset"></button>
       </div>
     </div>
   </div>

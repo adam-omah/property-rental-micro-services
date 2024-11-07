@@ -67,6 +67,11 @@ export class PropertiesComponent implements OnInit {
     });
   }
 
+  resetForm() {
+    this.propertyForm.reset();
+    this.editingProperty = null;
+  }
+
   editProperty(property: Property): void {
     this.editingProperty = { ...property };
     this.propertyForm.patchValue(this.editingProperty);
@@ -90,20 +95,8 @@ export class PropertiesComponent implements OnInit {
           this.displayDialog = false;
         });
       }
-
-      this.propertyForm.reset(); // Clear the form
-    } // You might want to add else block to handle invalid forms
-  }
-
-  cancelEdit(): void {
-    this.displayDialog = false;
-    this.propertyForm.reset();
-  }
-
-  openNewPropertyDialog(): void {
-    this.editingProperty = null; // Ensure it's a new property
-    this.propertyForm.reset(); // Reset the form to its defaults
-    this.displayDialog = true;
+      this.resetForm();
+    }
   }
 
   deleteProperty(id: number): void {

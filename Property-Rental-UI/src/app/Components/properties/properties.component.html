@@ -76,9 +76,11 @@
       <br>
       <textarea pInputTextarea id="features" formControlName="features" [rows]="3" [cols]="60"></textarea>
     </div>
-
-    <button pButton type="submit">{{ editingProperty ? 'Update Property' : 'Create New Property' }}</button>
-  </div>
+      <div class="form-row">
+        <button pButton type="submit">{{ editingProperty ? 'Update Property' : 'Create New Property' }}</button>
+        <button pButton type="button" (click)="resetForm()" label="Reset"></button>
+      </div>
+    </div>
   </div>
 </form>
 

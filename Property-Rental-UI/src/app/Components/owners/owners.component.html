@@ -36,9 +36,11 @@
         <br>
         <input pInputText type="text" id="ownerIBAN" formControlName="ownerIBAN" />
       </div>
-      <button pButton type="submit">{{ editingOwner ? 'Update Owner' : 'Create New Owner' }}</button>
+      <div class="form-row">
+        <button pButton type="submit">{{ editingOwner ? 'Update Owner' : 'Create New Owner' }}</button>
+        <button pButton type="button" (click)="resetForm()" label="Reset"></button>
+      </div>
     </div>
-
 
   </div>
 </form>

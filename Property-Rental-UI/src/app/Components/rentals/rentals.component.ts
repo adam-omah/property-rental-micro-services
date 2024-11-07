@@ -81,6 +81,11 @@ export class RentalsComponent implements OnInit {
       .subscribe((rentals) => (this.rentals = rentals));
   }
 
+  resetForm() {
+    this.rentalForm.reset();
+    this.editingRental = null;
+  }
+
   editRental(rental: Rental): void {
     this.editingRental = { ...rental };
     this.rentalForm.patchValue(this.editingRental);
@@ -97,14 +102,14 @@ export class RentalsComponent implements OnInit {
         this.rentalService.createRental(rentalData).subscribe(() => {
           this.getRentals();
           this.displayDialog = false;
-          this.rentalForm.reset();
+          this.resetForm();
         });
       } else {
         // Update existing rental
         this.rentalService.updateRental(rentalData).subscribe(() => {
           this.getRentals();
           this.displayDialog = false;
-          this.rentalForm.reset();
+          this.resetForm();
         });
       }
     }

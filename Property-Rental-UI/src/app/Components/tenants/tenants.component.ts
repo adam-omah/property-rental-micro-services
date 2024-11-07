@@ -68,27 +68,21 @@ export class TenantsComponent implements OnInit {
         this.tenantService.createTenant(tenantData).subscribe(() => {
           this.getTenants();
           this.displayDialog = false;
-          this.tenantForm.reset();
+          this.resetForm();
         });
       } else {
         this.tenantService.updateTenant(tenantData).subscribe(() => {
           this.getTenants();
           this.displayDialog = false;
-          this.tenantForm.reset();
+          this.resetForm();
         });
       }
     }
   }
 
-  cancelEdit(): void {
-    this.displayDialog = false;
+  resetForm() {
     this.tenantForm.reset();
-  }
-
-  openNewTenantDialog(): void {
     this.editingTenant = null;
-    this.tenantForm.reset();
-    this.displayDialog = true;
   }
 
   deleteTenant(id: number): void {

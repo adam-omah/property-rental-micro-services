@@ -79,7 +79,10 @@
     </div>
 
   </div>
-  <button pButton type="submit">{{ editingRental ? 'Update Rental' : 'Create New Rental' }}</button>
+  <div class="form-row">
+    <button pButton type="submit">{{ editingRental ? 'Update Rental' : 'Create New Rental' }}</button>
+    <button pButton type="button" (click)="resetForm()" label="Reset"></button>
+  </div>
 </form>
 
 <p-table [value]="rentals" responsiveLayout="scroll">
