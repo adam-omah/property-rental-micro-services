@@ -1,0 +1,1 @@
+Delete From Rentals;
