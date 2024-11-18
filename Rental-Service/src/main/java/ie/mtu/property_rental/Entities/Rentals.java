@@ -123,11 +123,9 @@ public class Rentals {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         try {
-
             String propertiesServiceUrl = RentalsConfig.getPropertiesServiceUrl();
             log.warn(propertiesServiceUrl);
             ResponseEntity<Properties> response = restTemplate.exchange(
