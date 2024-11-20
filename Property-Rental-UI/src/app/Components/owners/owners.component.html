@@ -1,74 +1,68 @@
-<form [formGroup]="ownerForm" (ngSubmit)="saveOwner()" class="form-container">
-  <div>
-    <h2 class="text-center">{{ editingOwner? 'Update Owner' : 'Create New Owner' }}</h2>
-    <input type="hidden" formControlName="ownerId">
+<form [formGroup]="ownerForm" (ngSubmit)="saveOwner()" class="form-container" data-test-id="ownerForm">
+  <div data-test-id="ownerFormContent">
+    <h2 class="text-center" data-test-id="ownerFormTitle">{{ editingOwner ? 'Update Owner' : 'Create New Owner' }}</h2>
+    <input type="hidden" formControlName="ownerId" data-test-id="ownerId">
 
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="ownerName">Owner Name</label>
-        <br>
-        <input pInputText type="text" id="ownerName" formControlName="ownerName" />
+    <div class="form-row" data-test-id="ownerFormRow1">
+      <div class="form-group col-md-6" data-test-id="ownerNameGroup">
+        <label for="ownerName" data-test-id="ownerNameLabel">Owner Name</label>
+        <input pInputText type="text" id="ownerName" formControlName="ownerName" data-test-id="ownerNameInput" />
       </div>
-
-      <div class="form-group col-md-6">
-        <label for="ownerEmail">Owner Email</label>
-        <br>
-        <input pInputText type="email" id="ownerEmail" formControlName="ownerEmail" />
+      <div class="form-group col-md-6" data-test-id="ownerEmailGroup">
+        <label for="ownerEmail" data-test-id="ownerEmailLabel">Owner Email</label>
+        <input pInputText type="email" id="ownerEmail" formControlName="ownerEmail" data-test-id="ownerEmailInput" />
       </div>
     </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <label for="ownerAddress">Owner Address</label>
-        <br>
-        <input pInputText type="text" id="ownerAddress" formControlName="ownerAddress" />
+    <div class="form-row" data-test-id="ownerFormRow2">
+      <div class="form-group col-md-12" data-test-id="ownerAddressGroup">
+        <label for="ownerAddress" data-test-id="ownerAddressLabel">Owner Address</label>
+        <input pInputText type="text" id="ownerAddress" formControlName="ownerAddress" data-test-id="ownerAddressInput" />
       </div>
-      <div class="form-group col-md-6">
-        <label for="ownerPhone">Owner Phone</label>
-        <br>
-        <input pInputText type="text" id="ownerPhone" formControlName="ownerPhone" />
+      <div class="form-group col-md-6" data-test-id="ownerPhoneGroup">
+        <label for="ownerPhone" data-test-id="ownerPhoneLabel">Owner Phone</label>
+        <input pInputText type="text" id="ownerPhone" formControlName="ownerPhone" data-test-id="ownerPhoneInput" />
       </div>
     </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="ownerIBAN">Owner IBAN</label>
-        <br>
-        <input pInputText type="text" id="ownerIBAN" formControlName="ownerIBAN" />
+    <div class="form-row" data-test-id="ownerFormRow3">
+      <div class="form-group col-md-6" data-test-id="ownerIBANGroup">
+        <label for="ownerIBAN" data-test-id="ownerIBANLabel">Owner IBAN</label>
+        <input pInputText type="text" id="ownerIBAN" formControlName="ownerIBAN" data-test-id="ownerIBANInput" />
       </div>
-      <div class="form-row">
-        <button pButton type="submit">{{ editingOwner ? 'Update Owner' : 'Create New Owner' }}</button>
-        <button pButton type="button" (click)="resetForm()" label="Reset"></button>
+      <div class="form-row" data-test-id="ownerFormButtons">
+        <button pButton type="submit" data-test-id="saveOwnerButton">{{ editingOwner ? 'Update Owner' : 'Create New Owner' }}</button>
+        <button pButton type="button" (click)="resetForm()" label="Reset" data-test-id="resetButton"></button>
       </div>
     </div>
 
   </div>
 </form>
 
-<p-table [value]="owners" responsiveLayout="scroll">
-  <ng-template pTemplate="header">
+<p-table [value]="owners" responsiveLayout="scroll" data-test-id="ownerTable">
+  <ng-template pTemplate="header" data-test-id="ownerTableHeader">
     <tr>
-      <th id="table_id">ID</th>
-      <th id="table_name">Name</th>
-      <th id="table_email">Email</th>
-      <th id="table_address">Address</th>
-      <th id="table_phone">Phone</th>
-      <th id="table_iban">IBAN</th>
-      <th id="table_actions">Actions</th>
+      <th id="table_id" data-test-id="tableHeaderId">ID</th>
+      <th id="table_name" data-test-id="tableHeaderName">Name</th>
+      <th id="table_email" data-test-id="tableHeaderEmail">Email</th>
+      <th id="table_address" data-test-id="tableHeaderAddress">Address</th>
+      <th id="table_phone" data-test-id="tableHeaderPhone">Phone</th>
+      <th id="table_iban" data-test-id="tableHeaderIBAN">IBAN</th>
+      <th id="table_actions" data-test-id="tableHeaderActions">Actions</th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-owner>
-    <tr>
-      <td>{{ owner.ownerId }}</td>
-      <td>{{ owner.ownerName }}</td>
-      <td>{{ owner.ownerEmail }}</td>
-      <td>{{ owner.ownerAddress }}</td>
-      <td>{{ owner.ownerPhone }}</td>
-      <td>{{ owner.ownerIBAN }}</td>
-      <td>
-        <button pButton type="button" icon="pi pi-pencil" (click)="editOwner(owner)" label="Edit"></button>
+  <ng-template pTemplate="body" let-owner data-test-id="ownerTableBody">
+    <tr data-test-id="ownerTableRow">
+      <td data-test-id="ownerTableId">{{ owner.ownerId }}</td>
+      <td data-test-id="ownerTableName">{{ owner.ownerName }}</td>
+      <td data-test-id="ownerTableEmail">{{ owner.ownerEmail }}</td>
+      <td data-test-id="ownerTableAddress">{{ owner.ownerAddress }}</td>
+      <td data-test-id="ownerTablePhone">{{ owner.ownerPhone }}</td>
+      <td data-test-id="ownerTableIBAN">{{ owner.ownerIBAN }}</td>
+      <td data-test-id="ownerTableActions">
+        <button pButton type="button" icon="pi pi-pencil" (click)="editOwner(owner)" label="Edit" data-test-id="editButton"></button>
         <button pButton type="button" icon="pi pi-trash" (click)="deleteOwner(owner.ownerId)"
-                style="color: white; background-color: red;" label="Delete"></button>
+                style="color: white; background-color: red;" label="Delete" data-test-id="deleteButton"></button>
       </td>
     </tr>
   </ng-template>
