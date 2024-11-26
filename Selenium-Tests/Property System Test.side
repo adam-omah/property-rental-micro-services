@@ -2,7 +2,7 @@
   "id": "1b974984-fe8f-4c55-9abf-e775c710f87a",
   "version": "2.0",
   "name": "Property System Test",
-  "url": "http://localhost:4200/owners",
+  "url": "http://localhost:4200",
   "tests": [{
     "id": "33291d3b-f7a4-4785-83a1-b938c86a0c5c",
     "name": "Owner testing",
@@ -270,6 +270,189 @@
       "targets": [],
       "value": ""
     }]
+  }, {
+    "id": "bfdd38c4-15f9-42f6-a3b4-1a242a976646",
+    "name": "Tenant Tests - No Data tags",
+    "commands": [{
+      "id": "1e9333b9-8624-4c90-b657-00b18d951bc3",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4fdbfd53-99ab-4bad-8044-1597a9d66124",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "874x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5ef02554-10f8-4a63-aefb-cfb15fcac429",
+      "comment": "",
+      "command": "click",
+      "target": "css=.p-datatable-tbody > .ng-star-inserted:nth-child(1)",
+      "targets": [
+        ["css=.p-datatable-tbody > .ng-star-inserted:nth-child(1)", "css:finder"],
+        ["xpath=//table[@id='pn_id_7-table']/tbody/tr", "xpath:idRelative"],
+        ["xpath=//tbody/tr", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c5511d75-9047-442d-9c4a-42c92a1aa019",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Tenants",
+      "targets": [
+        ["linkText=Tenants", "linkText"],
+        ["css=#pn_id_1_3 .p-ripple", "css:finder"],
+        ["xpath=//li[@id='pn_id_1_3']/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/tenants')]", "xpath:href"],
+        ["xpath=//li[4]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Tenants')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1ac3f32d-e919-4641-b063-13b5cd8a0316",
+      "comment": "",
+      "command": "click",
+      "target": "id=tenantName",
+      "targets": [
+        ["id=tenantName", "id"],
+        ["css=#tenantName", "css:finder"],
+        ["xpath=//input[@id='tenantName']", "xpath:attributes"],
+        ["xpath=//div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c99d2539-43d8-4737-ae63-a8d49b902577",
+      "comment": "",
+      "command": "type",
+      "target": "id=tenantName",
+      "targets": [
+        ["id=tenantName", "id"],
+        ["css=#tenantName", "css:finder"],
+        ["xpath=//input[@id='tenantName']", "xpath:attributes"],
+        ["xpath=//div/div/input", "xpath:position"]
+      ],
+      "value": "test"
+    }, {
+      "id": "f6305a22-7c90-4454-a634-dc58db36bffe",
+      "comment": "",
+      "command": "click",
+      "target": "id=tenantEmail",
+      "targets": [
+        ["id=tenantEmail", "id"],
+        ["css=#tenantEmail", "css:finder"],
+        ["xpath=//input[@id='tenantEmail']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "46be4464-5888-4823-abe5-e272b5cdc80d",
+      "comment": "",
+      "command": "type",
+      "target": "id=tenantEmail",
+      "targets": [
+        ["id=tenantEmail", "id"],
+        ["css=#tenantEmail", "css:finder"],
+        ["xpath=//input[@id='tenantEmail']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "test@test.com"
+    }, {
+      "id": "978b894a-32a3-4094-b388-00cd0b99ff50",
+      "comment": "",
+      "command": "click",
+      "target": "id=tenantPhone",
+      "targets": [
+        ["id=tenantPhone", "id"],
+        ["css=#tenantPhone", "css:finder"],
+        ["xpath=//input[@id='tenantPhone']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f527193f-ec65-4cec-992e-ab78ab8c566f",
+      "comment": "",
+      "command": "type",
+      "target": "id=tenantPhone",
+      "targets": [
+        ["id=tenantPhone", "id"],
+        ["css=#tenantPhone", "css:finder"],
+        ["xpath=//input[@id='tenantPhone']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "0877777"
+    }, {
+      "id": "de5e57d6-a00a-4eb1-bac4-880b1df8c35a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row > .p-element:nth-child(1)",
+      "targets": [
+        ["css=.form-row > .p-element:nth-child(1)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Create New Tenant')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4687853d-e0e8-4a29-a0bd-8906d0d351a2",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.form-row > .p-element:nth-child(1)",
+      "targets": [
+        ["css=.form-row > .p-element:nth-child(1)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Create New Tenant')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "eceae3ac-f776-454a-8964-c66f4ae25a8d",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.form-row > .p-element:nth-child(1)",
+      "targets": [
+        ["css=.form-row > .p-element:nth-child(1)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Create New Tenant')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f1a1c547-e2d7-4ede-8f93-8dd3c4ead84a",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7b3f5d0a-1ec7-4a6e-aec5-1b1b9ada1639",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ng-star-inserted:nth-child(4) .p-element:nth-child(2) > .p-button-label",
+      "targets": [
+        ["css=.ng-star-inserted:nth-child(4) .p-element:nth-child(2) > .p-button-label", "css:finder"],
+        ["xpath=//table[@id='pn_id_15-table']/tbody/tr[4]/td[5]/button[2]/span[2]", "xpath:idRelative"],
+        ["xpath=//tr[4]/td[5]/button[2]/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6485d32a-a451-4c3f-a079-11b3fa1b2e05",
+      "comment": "",
+      "command": "assertConfirmation",
+      "target": "Are you sure you want to delete this tenant?",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c40c6177-3096-44bb-ab53-9753d1f66c62",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "aacaa0f5-02d6-4b5b-b1e3-2871675d1d64",
@@ -279,6 +462,6 @@
     "timeout": 300,
     "tests": ["33291d3b-f7a4-4785-83a1-b938c86a0c5c"]
   }],
-  "urls": ["http://localhost:4200/", "http://localhost:4200/owners"],
+  "urls": ["http://localhost:4200/", "http://localhost:4200/owners", "http://localhost:4200/tenants"],
   "plugins": []
 }

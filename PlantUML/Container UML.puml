@@ -1,0 +1,40 @@
+@startuml
+actor User
+
+node "Property Service Container" {
+  [Property Service]
+  database "H2 Property Database" {
+  [Properties DB]
+  [Owners DB]
+  }
+}
+
+node "Rental Service Container" {
+  [Rental Service]
+  database "H2 Rental Database" {
+  [Rentals DB]
+  [Tenants DB]
+  }
+}
+
+node "Angular User Interface Container" {
+  [User Interface]
+}
+
+
+
+
+
+
+
+
+User -> [User Interface]
+[User Interface] <-- [Rental Service]
+[User Interface] <-- [Property Service]
+[Property Service] --> [Properties DB] : Reads/Writes
+[Property Service] --> [Owners DB] : Reads/Writes
+[Rental Service] --> [Rentals DB] : Reads/Writes
+[Rental Service] --> [Tenants DB] : Reads/Writes
+[Rental Service] --> [Property Service]
+[Property Service] -->  [Rental Service]
+@enduml
